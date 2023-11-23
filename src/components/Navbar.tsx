@@ -1,6 +1,6 @@
 import Link from "next/link";
 import MaxWidthWrapper from "./MaxWidthWrapper";
-import { Icons } from "./Icons";
+import { Icons } from "./Icons.1";
 import NavItems from "./NavItems";
 import { buttonVariants } from "./ui/button";
 import Cart from "./Cart";
@@ -19,7 +19,7 @@ const Navbar = () => {
               {/* Logo */}
               <div className="ml-4 flex lg:ml-0">
                 <Link href="/" className="flex">
-                  <Icons.logo className="h-16 w-16" />
+                  <Icons.beerLogo className="h-16 w-16" />
                 </Link>
               </div>
 
