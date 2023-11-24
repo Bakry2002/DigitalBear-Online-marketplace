@@ -28,7 +28,7 @@ const Page = () => {
 
           {/* Sign up form */}
           <div className="grid gap-6">
-            <form onSubmit={}>
+            <form onSubmit={() => {}}>
               <div className="grid gap-2">
                 <div className="grid gap-1 py-2"></div>
               </div>
