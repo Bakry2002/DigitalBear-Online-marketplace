@@ -11,7 +11,6 @@ import {
 } from "./ui/sheet";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
-import { Icons } from "./Icons";
 import Image from "next/image";
 import { Fragment } from "react";
 import { Separator } from "./ui/separator";
