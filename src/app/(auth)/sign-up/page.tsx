@@ -1,11 +1,47 @@
 "use client";
 
 import { Icons } from "@/components/Icons";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import {
+  AuthFormValues,
+  AuthSchema,
+} from "@/lib/validators/account-credentials-validator";
+import { trpc } from "@/trpc/client";
 
 const Page = () => {
+  /***
+   * React hook form Library:
+   * Form initial values
+   * Form submission
+   * Form error handling
+   **/
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<AuthFormValues>({
+    resolver: zodResolver(AuthSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  // const { data } = trpc.anyApiRoute.useQuery();
+  // console.log(data)
+
+  const onSubmit = async (values: AuthFormValues) => {
+    // send data to server
+    console.log(values);
+  };
   return (
     <>
       <div className="container relative flex pt-20 flex-col justify-center items-center lg:px-0">
@@ -28,9 +64,33 @@ const Page = () => {
 
           {/* Sign up form */}
           <div className="grid gap-6">
-            <form onSubmit={() => {}}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="grid gap-2">
-                <div className="grid gap-1 py-2"></div>
+                <div className="grid gap-1 py-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    {...register("email")}
+                    id="email"
+                    placeholder="you@example.com"
+                    className={cn({
+                      "focus-visible:ring-red-500": errors.email,
+                    })}
+                  />
+                </div>
+                <div className="grid gap-1 py-2">
+                  <Label htmlFor="password">Password</Label>
+                  <Input
+                    {...register("password")} // handle onChange, onBlur, value
+                    id="password"
+                    placeholder="Password"
+                    className={cn({
+                      "focus-visible:ring-red-500": errors.password,
+                    })}
+                  />
+                </div>
+
+                {/* Submit button */}
+                <Button>Sign up</Button>
               </div>
             </form>
           </div>

@@ -5,9 +5,19 @@
 import express from "express";
 import { getPayloadClient } from "./payload";
 import { nextApp, nextHandler } from "./next-utils";
+import * as trpcExpress from "@trpc/server/adapters/express";
+import { appRouter } from "./trpc";
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
+
+const createContext = ({
+  req,
+  res,
+}: trpcExpress.CreateExpressContextOptions) => ({
+  req,
+  res,
+});
 
 const start = async () => {
   const payload = await getPayloadClient({
@@ -19,19 +29,20 @@ const start = async () => {
     },
   });
 
+  app.use(
+    "/api/trpc",
+    trpcExpress.createExpressMiddleware({ router: appRouter, createContext })
+  );
   // nextHandler(req, res) to handle our NextJS requests
   app.use((req, res) => nextHandler(req, res));
   // just like that we can make our self completing independent from the Vercel platform
 
-  nextApp.prepare().then(() => {
-    payload.logger.info(`Next.js Started!`);
-  });
+  nextApp.prepare();
+  // nextApp.prepare().then(() => {
+  //   payload.logger.info(`Next.js Started!`);
+  // });
 
-  app.listen(PORT, () => {
-    payload.logger.info(
-      `Next.js App URL: ${process.env.NEXT_PUBLIC_SERVER_URL}`
-    );
-  });
+  app.listen(PORT);
 };
 
 start();
