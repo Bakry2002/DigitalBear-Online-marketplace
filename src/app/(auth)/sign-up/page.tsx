@@ -35,12 +35,12 @@ const Page = () => {
     },
   });
 
-  // const { data } = trpc.anyApiRoute.useQuery();
+  const { mutate } = trpc.auth.createPayloadUser.useMutation({});
   // console.log(data)
 
-  const onSubmit = async (values: AuthFormValues) => {
+  const onSubmit = ({ email, password }: AuthFormValues) => {
     // send data to server
-    console.log(values);
+    mutate({ email, password });
   };
   return (
     <>
@@ -82,6 +82,7 @@ const Page = () => {
                   <Input
                     {...register("password")} // handle onChange, onBlur, value
                     id="password"
+                    type="password"
                     placeholder="Password"
                     className={cn({
                       "focus-visible:ring-red-500": errors.password,

@@ -37,7 +37,10 @@ export const authRouter = router({
         data: {
           email,
           password,
+          role: "user",
         },
       });
+
+      return { success: true, sentToEmail: email };
     }),
 });
