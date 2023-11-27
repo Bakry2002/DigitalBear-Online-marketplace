@@ -74,21 +74,21 @@ const Page = () => {
         <div className="mx-auto w-full flex flex-col justify-center space-y-6 sm:w-[350px]">
           <div className="flex flex-col items-center text-center">
             <Icons.beerLogo className="w-20 h-20 text-primary-500" />
-            <h1 className="text-2xl font-bold">Create an account</h1>
+            <h1 className="text-2xl font-bold">Sign in to your account</h1>
 
             <Link
-              href="/sign-in"
+              href="/sign-up"
               className={buttonVariants({
                 variant: "link",
                 className: "gap-1 items-end",
               })}
             >
-              Already have an account? Sign in
+              Don&apos;t have an account? Create one now
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
 
-          {/* Sign up form */}
+          {/* Sign in form */}
           <div className="grid gap-6">
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="grid gap-2">
@@ -129,9 +129,26 @@ const Page = () => {
                 </div>
 
                 {/* Submit button */}
-                <Button>Sign up</Button>
+                <Button>Sign in</Button>
               </div>
             </form>
+
+            <div className="relative">
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 flex items-center"
+              >
+                <span className="w-full border-t" />
+              </div>
+              <div
+                aria-hidden="true"
+                className="relative flex justify-center text-xs uppercase"
+              >
+                <span className="text-muted-foreground px-2 bg-background">
+                  or
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
