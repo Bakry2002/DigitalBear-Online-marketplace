@@ -61,6 +61,7 @@ const Page = () => {
       // when user sign in, redirect to the page where they came from
       if (origin) {
         router.push(origin);
+        router.refresh();
         return;
       }
 
@@ -70,6 +71,7 @@ const Page = () => {
       }
 
       router.push("/");
+      router.refresh();
     },
 
     onError: (error) => {
