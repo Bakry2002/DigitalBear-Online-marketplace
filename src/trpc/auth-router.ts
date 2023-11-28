@@ -71,6 +71,36 @@ export const authRouter = router({
       // else, success
       return { success: true };
     }),
+
+  signIn: publicProcedure.input(AuthSchema).mutation(async ({ input, ctx }) => {
+    // destructuring the email and password from the input
+    const { email, password } = input;
+    // destructuring the request from the context
+    const { res } = ctx;
+
+    // access to the CMS client to log in the user
+    const payload = await getPayloadClient();
+
+    // try to log in the user
+    try {
+      await payload.login({
+        collection: "users",
+        data: {
+          email,
+          password,
+        },
+        // to set the cookie in the browser by using the response object
+        res,
+      });
+
+      return { success: true };
+    } catch (error) {
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "Invalid credentials",
+      });
+    }
+  }),
 });
 
 // NOTES:
