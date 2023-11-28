@@ -4,9 +4,13 @@ import { Icons } from "./Icons.1";
 import NavItems from "./NavItems";
 import { buttonVariants } from "./ui/button";
 import Cart from "./Cart";
+import { getServerSideUser } from "@/lib/get-serverSide-user";
+import { cookies } from "next/headers";
+import UserAccountNav from "./UserAccountNav";
 
-const Navbar = () => {
-  const user = null; // mock for now
+const Navbar = async () => {
+  const nextCookies = cookies();
+  const { user } = await getServerSideUser(nextCookies);
 
   return (
     <div className="bg-white sticky z-50 top-0 inset-x-0 h-16">
@@ -45,7 +49,7 @@ const Navbar = () => {
                   )}
 
                   {user ? (
-                    <div></div>
+                    <UserAccountNav />
                   ) : (
                     <Link
                       href="/sign-up"

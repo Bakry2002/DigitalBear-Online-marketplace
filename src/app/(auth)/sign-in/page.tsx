@@ -16,10 +16,24 @@ import {
   AuthSchema,
 } from "@/lib/validators/account-credentials-validator";
 import { trpc } from "@/trpc/client";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const Page = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const isSeller = searchParams.get("as") === "seller";
+  const origin = searchParams.get("origin"); // where the user came from a specific page route
+
+  // seller scenario
+  const continueAsSeller = () => {
+    router.push("?as=seller");
+  };
+
+  // customer scenario
+  const continueAsCustomer = () => {
+    router.replace("/sign-in", undefined);
+  };
+
   /***
    * React hook form Library:
    * Form initial values
@@ -38,35 +52,37 @@ const Page = () => {
     },
   });
 
-  const { mutate } = trpc.auth.createPayloadUser.useMutation({
-    onError: (error) => {
-      if (error.data?.code === "CONFLICT") {
-        toast.error(
-          "This Email is already in use. Please try again with a different email."
-        );
+  const { mutate: signIn, isLoading } = trpc.auth.signIn.useMutation({
+    onSuccess: () => {
+      toast.success("Welcome back!");
 
+      router.refresh(); // refresh the page
+
+      // when user sign in, redirect to the page where they came from
+      if (origin) {
+        router.push(origin);
         return;
       }
 
-      if (error instanceof ZodError) {
-        toast.error(error.issues[0].message);
-
+      if (isSeller) {
+        router.push("/seller");
         return;
       }
 
-      toast.error("Something went wrong. Please try again.");
+      router.push("/");
     },
 
-    onSuccess: ({ sentToEmail }) => {
-      toast.success(`Verification link sent to ${sentToEmail}.`);
-      router.push(`/verify-email?to=${sentToEmail}`);
+    onError: (error) => {
+      if (error.data?.code === "UNAUTHORIZED") {
+        toast.error("Invalid email or password.");
+        return;
+      }
     },
   });
-  // console.log(data)
 
   const onSubmit = ({ email, password }: AuthFormValues) => {
     // send data to server
-    mutate({ email, password });
+    signIn({ email, password });
   };
   return (
     <>
@@ -74,7 +90,9 @@ const Page = () => {
         <div className="mx-auto w-full flex flex-col justify-center space-y-6 sm:w-[350px]">
           <div className="flex flex-col items-center text-center">
             <Icons.beerLogo className="w-20 h-20 text-primary-500" />
-            <h1 className="text-2xl font-bold">Sign in to your account</h1>
+            <h1 className="text-2xl font-bold">
+              Sign in to your {isSeller ? "seller" : ""} account
+            </h1>
 
             <Link
               href="/sign-up"
@@ -149,6 +167,24 @@ const Page = () => {
                 </span>
               </div>
             </div>
+
+            {isSeller ? (
+              <Button
+                onClick={continueAsCustomer}
+                variant="secondary"
+                disabled={isLoading}
+              >
+                Continue as customer
+              </Button>
+            ) : (
+              <Button
+                onClick={continueAsSeller}
+                variant="secondary"
+                disabled={isLoading}
+              >
+                Continue as seller
+              </Button>
+            )}
           </div>
         </div>
       </div>
