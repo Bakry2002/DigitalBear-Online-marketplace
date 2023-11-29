@@ -1,4 +1,5 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import ProductReel from "@/components/ProductReel";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { ArrowDownToLine, CheckCircle, Leaf } from "lucide-react";
 import Link from "next/link";
@@ -28,23 +29,25 @@ const perks = [
 export default function Home() {
   return (
     <>
-      <MaxWidthWrapper className="py-20 mx-auto text-center flex flex-col items-center max-w-3xl">
-        <h1 className="text-5xl font-bold text-gray-900 tracking-tight sm:text-6xl [text-wrap:balance]">
-          Your market for high quality{" "}
-          <span className="text-blue-600">digital assets</span>
-        </h1>
-        <p className="mt-6 text-lg max-w-prose text-muted-foreground">
-          Welcome to DigitalBeer. Every asset on our platform is verified by our
-          team to ensure highest quality standards.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 mt-6">
-          <Link href="/products" className={buttonVariants()}>
-            Browse Trending
-          </Link>
-          <Button variant="ghost">Our Quality Promise &rarr;</Button>
+      <MaxWidthWrapper>
+        <div className="py-20 mx-auto text-center flex flex-col items-center max-w-3xl">
+          <h1 className="text-5xl font-bold text-gray-900 tracking-tight sm:text-6xl [text-wrap:balance]">
+            Your market for high quality{" "}
+            <span className="text-blue-600">digital assets</span>
+          </h1>
+          <p className="mt-6 text-lg max-w-prose text-muted-foreground">
+            Welcome to DigitalBeer. Every asset on our platform is verified by
+            our team to ensure highest quality standards.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 mt-6">
+            <Link href="/products" className={buttonVariants()}>
+              Browse Trending
+            </Link>
+            <Button variant="ghost">Our Quality Promise &rarr;</Button>
+          </div>
         </div>
 
-        {/* TODO: List of products */}
+        <ProductReel href="/products" title="Fuck you" />
       </MaxWidthWrapper>
 
       <section className="border-t border-gray-200 bg-gray-50">

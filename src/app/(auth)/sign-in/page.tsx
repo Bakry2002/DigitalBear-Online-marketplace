@@ -66,7 +66,7 @@ const Page = () => {
       }
 
       if (isSeller) {
-        router.push("/seller");
+        router.push("/sell");
         return;
       }
 
