@@ -69,7 +69,11 @@ const ProductReel = (props: ProductReelProps) => {
           <div className="w-full grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8">
             {/* List all product */}
             {map.map((product, index) => (
-              <ProductListing key={index} product={product} index={index} />
+              <ProductListing
+                key={`product-${index}`}
+                product={product}
+                index={index}
+              />
             ))}
           </div>
         </div>
