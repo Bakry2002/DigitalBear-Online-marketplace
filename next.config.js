@@ -3,7 +3,8 @@ const nextConfig = {
   images: {
     domains: [
       "localhost",
-      "https://digitalbeer-online-marketplace.up.railway.app",
+      "digitalbeer-online-marketplace.up.railway.app",
+      "ci3.googleusercontent.com",
     ],
   },
 };
