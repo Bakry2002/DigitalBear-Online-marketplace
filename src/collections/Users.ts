@@ -21,11 +21,7 @@ export const Users: CollectionConfig = {
         return PrimaryActionEmailHtml({
           actionLabel: "Verify your account",
           buttonText: "Verify Account",
-          href: `${
-            process.env.NODE_ENV === "development"
-              ? process.env.NEXT_PUBLIC_SERVER_URL
-              : "http://digitalbeer-online-marketplace.up.railway.app"
-          }/verify-email?token=${token}`,
+          href: `${process.env.NEXT_PUBLIC_SERVER_URL}/verify-email?token=${token}`,
         });
       },
     },
