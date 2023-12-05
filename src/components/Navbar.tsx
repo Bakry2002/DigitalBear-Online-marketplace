@@ -7,6 +7,7 @@ import Cart from "./Cart";
 import { getServerSideUser } from "@/lib/get-serverSide-user";
 import { cookies } from "next/headers";
 import UserAccountNav from "./UserAccountNav";
+import MobileNav from "./MobileNav";
 
 const Navbar = async () => {
   const nextCookies = cookies();
@@ -19,6 +20,7 @@ const Navbar = async () => {
           <div className="">
             <div className="h-16 flex items-center">
               {/* TODO: Mobile nav */}
+              <MobileNav />
 
               {/* Logo */}
               <div className="ml-4 flex lg:ml-0">
