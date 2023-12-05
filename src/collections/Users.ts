@@ -18,6 +18,17 @@ export const Users: CollectionConfig = {
       generateEmailHTML: ({ token }) => {
         console.log(token);
         // return `<a href="${process.env.NEXT_PUBLIC_SERVER_URL}/verify-email?token=${token}">Click here to verify your email</a>`;
+        // check if there is s in http and remove it
+        if (process.env.NEXT_PUBLIC_SERVER_URL!.includes("https://")) {
+          return PrimaryActionEmailHtml({
+            actionLabel: "Verify your account",
+            buttonText: "Verify Account",
+            href: `${process.env.NEXT_PUBLIC_SERVER_URL!.replace(
+              "https://",
+              "http://"
+            )}/verify-email?token=${token}`,
+          });
+        }
         return PrimaryActionEmailHtml({
           actionLabel: "Verify your account",
           buttonText: "Verify Account",
