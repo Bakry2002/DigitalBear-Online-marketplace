@@ -24,7 +24,7 @@ export const Users: CollectionConfig = {
           href: `${
             process.env.NODE_ENV === "development"
               ? process.env.NEXT_PUBLIC_SERVER_URL
-              : "https://digitalbeer-online-marketplace.up.railway.app"
+              : "http://digitalbeer-online-marketplace.up.railway.app"
           }/verify-email?token=${token}`,
         });
       },
