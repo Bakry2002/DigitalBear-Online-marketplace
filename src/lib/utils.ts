@@ -28,7 +28,7 @@ export function constructMetadata({
   title = "DigitalBeer - the marketplace for digital assets",
   description = "DigitalBeer is an open-source marketplace for high-quality digital goods.",
   image = "/thumbnail.png",
-  icons = "/favicon.ico",
+  icons = "/favicon.svg",
   noIndex = false,
 }: {
   title?: string;
