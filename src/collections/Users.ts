@@ -18,21 +18,14 @@ export const Users: CollectionConfig = {
       generateEmailHTML: ({ token }) => {
         console.log(token);
         // return `<a href="${process.env.NEXT_PUBLIC_SERVER_URL}/verify-email?token=${token}">Click here to verify your email</a>`;
-        // check if there is s in http and remove it
-        if (process.env.NEXT_PUBLIC_SERVER_URL!.includes("https://")) {
-          return PrimaryActionEmailHtml({
-            actionLabel: "Verify your account",
-            buttonText: "Verify Account",
-            href: `${process.env.NEXT_PUBLIC_SERVER_URL!.replace(
-              "https://",
-              "http://"
-            )}/verify-email?token=${token}`,
-          });
-        }
         return PrimaryActionEmailHtml({
           actionLabel: "Verify your account",
           buttonText: "Verify Account",
-          href: `${process.env.NEXT_PUBLIC_SERVER_URL}/verify-email?token=${token}`,
+          href: `${
+            process.env.NODE_ENV === "development"
+              ? process.env.NEXT_PUBLIC_SERVER_URL
+              : "https://digitalbeer-online-marketplace.up.railway.app"
+          }/verify-email?token=${token}`,
         });
       },
     },
